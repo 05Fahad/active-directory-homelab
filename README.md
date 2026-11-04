@@ -1,0 +1,81 @@
+# Active Directory Home Lab
+
+A Windows Server 2025 Active Directory environment built from scratch in VirtualBox to practice real-world IT administration: user and group management, Group Policy, DNS/DHCP, help desk workflows, and PowerShell automation.
+
+> **Status:** In progress. Domain controller VM built and Windows Server installed. Next up: static IP and Active Directory promotion.
+
+---
+
+## Lab Overview
+
+| Component | Details |
+|---|---|
+| Hypervisor | Oracle VirtualBox |
+| Host | Dell Inspiron 15 3501 (Intel CPU, 12 GB RAM, SSD, Windows 11 Home) |
+| Lab network | VirtualBox NAT Network `ADLab`, `10.10.10.0/24`, VirtualBox DHCP disabled |
+| Domain | `lab.local` (planned) |
+| Domain controller | `DC01`, Windows Server 2025 Standard Evaluation (Desktop Experience) |
+| Client | Windows 11 Enterprise Evaluation (planned) |
+
+### Network Plan
+
+```
+            Internet
+               |
+     VirtualBox NAT gateway (10.10.10.1)
+               |
+      ADLab NAT Network 10.10.10.0/24
+        |                          |
+  DC01 (10.10.10.10)         CLIENT01 (DHCP 10.10.10.100-200)
+  AD DS, DNS, DHCP           Windows 11, joined to lab.local
+```
+
+The lab runs on an isolated NAT Network so the domain controller's DHCP server can never hand out addresses on my home network.
+
+---
+
+## Progress
+
+- [x] Created isolated NAT Network (`ADLab`) with VirtualBox DHCP disabled
+- [x] Built DC01 VM (2 vCPU, 3 GB RAM, 50 GB dynamic disk)
+- [x] Installed Windows Server 2025 (Desktop Experience)
+- [x] Took baseline snapshot ("Fresh install")
+- [ ] Rename server and set static IP
+- [ ] Install AD DS and promote to domain controller (`lab.local`)
+- [ ] Configure DHCP scope
+- [ ] Build Windows 11 client and join it to the domain
+- [ ] Create OU structure, users, and security groups
+- [ ] Bulk-create users with PowerShell
+- [ ] Help desk tasks: password resets, account lockouts, disable/delete, AD Recycle Bin restore
+- [ ] Group Policy: password/lockout policy, USB block, drive mapping
+- [ ] Onboarding/offboarding scripts
+- [ ] Ticketing workflow with Jira Service Management
+
+---
+
+## Documentation
+
+1. [Lab Setup: VirtualBox and Network](docs/01-lab-setup.md)
+2. [Installing Windows Server 2025](docs/02-windows-server-install.md)
+3. [Troubleshooting Log](docs/troubleshooting.md)
+
+---
+
+## Skills Demonstrated
+
+- Virtualization and lab design (VirtualBox, NAT networking, snapshots)
+- Windows Server installation and configuration
+- Boot troubleshooting (UEFI vs. BIOS, boot order, install media)
+- *Coming as the lab progresses:* Active Directory, DNS, DHCP, Group Policy, PowerShell, ITSM ticketing
+
+---
+
+## Repository Structure
+
+```
+active-directory-homelab/
+├── README.md
+├── docs/           Step-by-step write-ups for each phase
+├── scripts/        PowerShell scripts (user provisioning, offboarding)
+└── screenshots/    Screenshots for each milestone
+```
