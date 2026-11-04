@@ -2,7 +2,7 @@
 
 A Windows Server 2025 Active Directory environment built from scratch in VirtualBox to practice real-world IT administration: user and group management, Group Policy, DNS/DHCP, help desk workflows, and PowerShell automation.
 
-> **Status:** In progress. Domain controller VM built and Windows Server installed. Next up: static IP and Active Directory promotion.
+> **Status:** In progress. DC01 is promoted to a domain controller for `lab.local` with AD-integrated DNS. Next up: DHCP and joining a Windows 11 client.
 
 ---
 
@@ -13,7 +13,7 @@ A Windows Server 2025 Active Directory environment built from scratch in Virtual
 | Hypervisor | Oracle VirtualBox |
 | Host | Dell Inspiron 15 3501 (Intel CPU, 12 GB RAM, SSD, Windows 11 Home) |
 | Lab network | VirtualBox NAT Network `ADLab`, `10.10.10.0/24`, VirtualBox DHCP disabled |
-| Domain | `lab.local` (planned) |
+| Domain | `lab.local` (forest functional level Windows2025Domain) |
 | Domain controller | `DC01`, Windows Server 2025 Standard Evaluation (Desktop Experience) |
 | Client | Windows 11 Enterprise Evaluation (planned) |
 
@@ -40,8 +40,8 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 - [x] Built DC01 VM (2 vCPU, 3 GB RAM, 50 GB dynamic disk)
 - [x] Installed Windows Server 2025 (Desktop Experience)
 - [x] Took baseline snapshot ("Fresh install")
-- [ ] Rename server and set static IP
-- [ ] Install AD DS and promote to domain controller (`lab.local`)
+- [x] Renamed server to DC01 and set static IP `10.10.10.10`
+- [x] Installed AD DS and promoted to domain controller (`lab.local`) with integrated DNS
 - [ ] Configure DHCP scope
 - [ ] Build Windows 11 client and join it to the domain
 - [ ] Create OU structure, users, and security groups
@@ -57,7 +57,8 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 
 1. [Lab Setup: VirtualBox and Network](docs/01-lab-setup.md)
 2. [Installing Windows Server 2025](docs/02-windows-server-install.md)
-3. [Troubleshooting Log](docs/troubleshooting.md)
+3. [Naming, Static IP, and Promoting the Domain Controller](docs/03-static-ip-and-ad-ds.md)
+4. [Troubleshooting Log](docs/troubleshooting.md)
 
 ---
 
@@ -66,7 +67,11 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 - Virtualization and lab design (VirtualBox, NAT networking, snapshots)
 - Windows Server installation and configuration
 - Boot troubleshooting (UEFI vs. BIOS, boot order, install media)
-- *Coming as the lab progresses:* Active Directory, DNS, DHCP, Group Policy, PowerShell, ITSM ticketing
+- Static IP addressing and layered connectivity testing
+- Active Directory Domain Services: new forest and domain controller promotion
+- DNS: AD-integrated zones, name resolution testing
+- PowerShell for server configuration
+- *Coming as the lab progresses:* DHCP, Group Policy, user lifecycle management, ITSM ticketing
 
 ---
 
