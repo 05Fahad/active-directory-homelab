@@ -2,7 +2,7 @@
 
 A Windows Server 2025 Active Directory environment built from scratch in VirtualBox to practice real-world IT administration: user and group management, Group Policy, DNS/DHCP, help desk workflows, and PowerShell automation.
 
-> **Status:** In progress. DC01 is promoted to a domain controller for `lab.local` with AD-integrated DNS. Next up: DHCP and joining a Windows 11 client.
+> **Status:** In progress. DC01 runs AD DS, DNS, and DHCP for `lab.local`, and a Windows 11 client (CLIENT01) is joined to the domain. Next up: OU structure, users, and security groups.
 
 ---
 
@@ -15,7 +15,7 @@ A Windows Server 2025 Active Directory environment built from scratch in Virtual
 | Lab network | VirtualBox NAT Network `ADLab`, `10.10.10.0/24`, VirtualBox DHCP disabled |
 | Domain | `lab.local` (forest functional level Windows2025Domain) |
 | Domain controller | `DC01`, Windows Server 2025 Standard Evaluation (Desktop Experience) |
-| Client | Windows 11 Enterprise Evaluation (planned) |
+| Client | `CLIENT01`, Windows 11 Enterprise Evaluation, DHCP-assigned `10.10.10.100`, joined to `lab.local` |
 
 ### Network Plan
 
@@ -42,8 +42,8 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 - [x] Took baseline snapshot ("Fresh install")
 - [x] Renamed server to DC01 and set static IP `10.10.10.10`
 - [x] Installed AD DS and promoted to domain controller (`lab.local`) with integrated DNS
-- [ ] Configure DHCP scope
-- [ ] Build Windows 11 client and join it to the domain
+- [x] Configured and authorized DHCP (scope `10.10.10.100–200` with router, DNS, and domain options)
+- [x] Built Windows 11 client, verified DHCP lease and DNS, and joined it to `lab.local`
 - [ ] Create OU structure, users, and security groups
 - [ ] Bulk-create users with PowerShell
 - [ ] Help desk tasks: password resets, account lockouts, disable/delete, AD Recycle Bin restore
@@ -58,7 +58,9 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 1. [Lab Setup: VirtualBox and Network](docs/01-lab-setup.md)
 2. [Installing Windows Server 2025](docs/02-windows-server-install.md)
 3. [Naming, Static IP, and Promoting the Domain Controller](docs/03-static-ip-and-ad-ds.md)
-4. [Troubleshooting Log](docs/troubleshooting.md)
+4. [DHCP Server](docs/04-dhcp.md)
+5. [Windows 11 Client and Domain Join](docs/05-client-domain-join.md)
+6. [Troubleshooting Log](docs/troubleshooting.md)
 
 ---
 
@@ -66,12 +68,14 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 
 - Virtualization and lab design (VirtualBox, NAT networking, snapshots)
 - Windows Server installation and configuration
-- Boot troubleshooting (UEFI vs. BIOS, boot order, install media)
+- Boot troubleshooting (UEFI vs. BIOS, saved VM state, boot order, install media)
 - Static IP addressing and layered connectivity testing
 - Active Directory Domain Services: new forest and domain controller promotion
 - DNS: AD-integrated zones, name resolution testing
-- PowerShell for server configuration
-- *Coming as the lab progresses:* DHCP, Group Policy, user lifecycle management, ITSM ticketing
+- DHCP: AD authorization, scope design, scope options, lease management
+- Domain join and client verification (computer accounts, secure channel)
+- PowerShell for server and client configuration
+- *Coming as the lab progresses:* Group Policy, user lifecycle management, ITSM ticketing
 
 ---
 
