@@ -2,7 +2,7 @@
 
 A Windows Server 2025 Active Directory environment built from scratch in VirtualBox to practice real-world IT administration: user and group management, Group Policy, DNS/DHCP, help desk workflows, and PowerShell automation.
 
-> **Status:** In progress. DC01 runs AD DS, DNS, and DHCP for `lab.local`, and a Windows 11 client (CLIENT01) is joined to the domain. Next up: OU structure, users, and security groups.
+> **Status:** In progress. DC01 runs AD DS, DNS, and DHCP for `lab.local`, and a Windows 11 client (CLIENT01) is joined to the domain. OUs and 13 user accounts are in place. Next up: security groups and a permission-controlled file share.
 
 ---
 
@@ -44,8 +44,9 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 - [x] Installed AD DS and promoted to domain controller (`lab.local`) with integrated DNS
 - [x] Configured and authorized DHCP (scope `10.10.10.100–200` with router, DNS, and domain options)
 - [x] Built Windows 11 client, verified DHCP lease and DNS, and joined it to `lab.local`
-- [ ] Create OU structure, users, and security groups
-- [ ] Bulk-create users with PowerShell
+- [x] Created OU structure and moved CLIENT01 into a Workstations OU
+- [x] Created users manually and bulk-created 10 users with a PowerShell script
+- [ ] Create security groups and a permission-controlled file share
 - [ ] Help desk tasks: password resets, account lockouts, disable/delete, AD Recycle Bin restore
 - [ ] Group Policy: password/lockout policy, USB block, drive mapping
 - [ ] Onboarding/offboarding scripts
@@ -60,7 +61,8 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 3. [Naming, Static IP, and Promoting the Domain Controller](docs/03-static-ip-and-ad-ds.md)
 4. [DHCP Server](docs/04-dhcp.md)
 5. [Windows 11 Client and Domain Join](docs/05-client-domain-join.md)
-6. [Troubleshooting Log](docs/troubleshooting.md)
+6. [OU Structure and User Accounts](docs/06-ous-and-users.md)
+7. [Troubleshooting Log](docs/troubleshooting.md)
 
 ---
 
@@ -74,8 +76,10 @@ The lab runs on an isolated NAT Network so the domain controller's DHCP server c
 - DNS: AD-integrated zones, name resolution testing
 - DHCP: AD authorization, scope design, scope options, lease management
 - Domain join and client verification (computer accounts, secure channel)
+- OU design and user account management (ADUC and PowerShell)
+- PowerShell scripting: CSV-driven bulk user provisioning
 - PowerShell for server and client configuration
-- *Coming as the lab progresses:* Group Policy, user lifecycle management, ITSM ticketing
+- *Coming as the lab progresses:* security groups and NTFS permissions, Group Policy, offboarding, ITSM ticketing
 
 ---
 
